@@ -6,18 +6,18 @@ This repo utilises code in the following sources:
 If there are any issues with these inclusions, they will be replaced with alternatives shortly after I have been notified.
 
 
-### What is Lockout
+## What is Lockout
 
 Lockout is a prototype which is designed to place a barrier between the user and data which they have encrypted by scrambling a predetermined portion of the key.
 
-### How it works
+## How it works
 
-# Encryption
+### Encryption
 The user provides the following inputs
 - plaintext (PT)
 - user password (PW)
 - decryption strength (DS)
-- a salt word [optional] (S)
+- a salt word (optional) (S)
 
 1. PW is passed through a hash algorithm
 2. the first X bits (currently 128) of h(PW) are subsequently passed into a key generator along with DS
@@ -25,11 +25,11 @@ The user provides the following inputs
 4. The plaintext is appended with either the optional S or PW if no S was given
 5. The plaintext is encrypted using K, all other inputted values are forgotten unless saved elsewhere
 
-# Decryption
+### Decryption
 The user provides:
 - ciphtertext (CT)
 - user password (PW)
-- salt word [optional] (S)
+- salt word (optional) (S)
 
 An initial test key is built using h(PW)
 A recursive function attempts to decrypt the ciphertext using all possible key combinations, beginning by changing the final bit and working its way back. Following each attempt, a check is made to see if the appended value from step 4 is present, in which case it has successfully decrypted the data.
@@ -37,7 +37,7 @@ A recursive function attempts to decrypt the ciphertext using all possible key c
 If the user has retained the value of DS when decrypting, they should know the maximum number of attempts needed and therefore also be able to eventually tell whether they attempt was unsuccessful.
 
 
-### Next steps
+## Next steps
 Currently at the most basic acceptable stage, the next steps for this project are:
 1. A process to read in and write to files
 2. Timing tests added to debugging to remove significant inefficiencies (only significant ones, it's beyond my scope to make this run perfectly)
