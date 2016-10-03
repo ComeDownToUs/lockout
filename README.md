@@ -21,9 +21,12 @@ The user provides the following inputs
 
 1. PW is passed through a hash algorithm
 2. the first X bits (currently 128) of h(PW) are subsequently passed into a key generator along with DS
-3. The key generator replaces the number of bytes specified by DS with randomised values to create the encryption key K
+3. The key generator maintains the first DS of h(PW) and replaces the remaining 128 - DS bit with randomised values to create the encryption key K *
 4. The plaintext is appended with either the optional S or PW if no S was given
 5. The plaintext is encrypted using K, all other inputted values are forgotten unless saved elsewhere
+
+* //note: it currently maintains the first DS/8 ~bytes~ and limits the next byte to a figure which ensures the brute force algorithm will resolve its value within the desired level of complexity. e.g. An argument of 127 will keep the first remaining 15 bytes of a 16 byte (or 128 bit) key as is, the final byte will be limited to a value of range 2^1 values.
+I do plan on eventually writing up all of these portions using bitwise operators to get a bit better with them, but I don't want to wreck my head with that for now.
 
 ### Decryption
 The user provides:
@@ -57,5 +60,5 @@ To run
 ./tester [password] [user inputted string argument] [decryption difficulty]
 ```
 - Due to some lazy testing, the password currently needs to be exactly 8 characters
-- User inputted string is currently set to a limit of 32 bytes
-- decryption difficulty currently specifies how many entries of the key are NOT to be randomised (i.e. 16 means all 16 bytes are to remain as is). I recommend leaving this setting at 15 until you decide which outputs you wish to leave in.
+- User inputted string is currently set to a limit of 32 bytes, just change the TEXTSIZE constant to make it larger. Will make this flexible at some point.
+- decryption difficulty currently specifies how many entries of the key are NOT to be randomised (i.e. 128 means all 128 bit are to remain as is). I recommend leaving this setting at a figure over 112 until you decide which outputs you wish to leave in.
