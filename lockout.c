@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include "aes.h"
 #include "sha256.h"
@@ -66,11 +67,20 @@ void sha256_gen(uint8_t* input, uint8_t* output){
 }
 
 void password_gen(uint8_t* hash, uint8_t* password, uint8_t length, uint8_t strength){
+  uint8_t strength_in_bytes = (uint8_t)strength/8;
+  uint8_t remainder_range = (strength ==0) ? 0 : 8 - strength%8;
+  printf("strength_in_bytes: %d\n", strength_in_bytes);
+
+  printf("remainder range: %d\n", remainder_range);
+  printf("max value of index %d should be %d\n", strength_in_bytes+1, ((int)pow(2, remainder_range )-1));
+
   for(int i=length-1; i>=0; i--){
-    if(i>=strength)
+    if(i>strength_in_bytes)
       password[i]=rand()%256;
-    else
+    else if(i<strength_in_bytes)
       password[i]=hash[i];
+    else 
+      password[i]=rand()%( (int)pow(2,remainder_range) );
   }
   print_array(hash, length);
   print_array(password, length);

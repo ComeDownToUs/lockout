@@ -39,6 +39,7 @@ If the user has retained the value of DS when decrypting, they should know the m
 
 ## Next steps
 Currently at the most basic acceptable stage, the next steps for this project are:
+
 1. A process to read in and write to files
 2. Timing tests added to debugging to remove significant inefficiencies (only significant ones, it's beyond my scope to make this run perfectly)
 3. Formal command line argument schema and some general security tests
