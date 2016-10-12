@@ -9,6 +9,9 @@
 #include "lockout.h"
 
 static void menu(void);
+static int strength_check(char* algorithm, int strength);
+static void file_io(char* filename, char* text, int filesize, char readorwrite);
+
 
 //password string strength
 int main(int argc, char** argv){
@@ -28,6 +31,10 @@ int main(int argc, char** argv){
   strcat(plaintext, argv[2]);//salting plaintext with verifier
   strength = atoi(argv[3]);
 
+  if(strength_check("AES128", strength)){
+    return 0;
+  }
+
   sha256_gen(copypass, hashed);
 
   lockout(hashed, plaintext, ciphertext, strength);
@@ -46,6 +53,8 @@ int main(int argc, char** argv){
     print_array(ciphertext, TEXTSIZE);
     printf("output\n");
     print_array(output, TEXTSIZE);
+    file_io("cipher.txt", ciphertext, TEXTSIZE, 'w');
+    file_io("output.txt", output, TEXTSIZE, 'w');
   for(int i=0; i<argc; i++){
     printf("\n%s\n", argv[i]);
   }
@@ -66,5 +75,35 @@ static void menu(void){
   }
 }
 
+static void file_io(char* filename, uint8_t* text, int filesize, char readorwrite){
+  FILE* fp;
+  if(readorwrite == 'r' || readorwrite == 'w'){
+    if(readorwrite=='r'){
+      fp = fopen(filename, "r");
+      fread(text, sizeof(uint8_t), filesize, fp);
+    }else if(readorwrite=='w'){ 
+      fp = fopen(filename, "w");
+      fprintf(fp, "%s", text);//fprintf removes junk at end
+    }
+    fclose(fp);
+  }else{
+    printf("invalid file process\n");
+  }
+}
 
+static int strength_check(char* algorithm, int strength){
+  int alg_str = 0;
+  printf("(does it run)\n");
+  if(strcmp(algorithm, "AES128")==0){
+    alg_str = 128;
+  }
 
+  if (strength > (alg_str-1) || strength < 1){
+    printf(
+      "this program uses %s, therefore the value must be between 1 and %d (we suggest %d)",
+      algorithm, alg_str-1, alg_str-2);
+    return 1;
+  }
+
+  return 0;
+}
