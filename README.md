@@ -6,6 +6,18 @@ This repo utilises code in the following sources:
 If there are any issues with these inclusions, they will be replaced with alternatives shortly after I have been notified.
 
 
+1. [What is Lockout](#what-is-lockout)
+  * Okay... why?
+    * Case Study: Facebook
+2. How it works
+  * Encryption
+  * Decryption
+3. Next Steps
+  * Pipe Dreams
+4. Current Testing Process
+5. Q&A Corner
+
+
 ## What is Lockout
 
 Lockout is a prototype which is designed to place a barrier between the user and data which they have encrypted by scrambling a predetermined portion of the key.
