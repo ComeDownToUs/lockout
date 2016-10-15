@@ -1,0 +1,4 @@
+*.o
+cipher.txt
+output.txt
+test2.c
