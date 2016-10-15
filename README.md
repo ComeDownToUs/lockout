@@ -1,21 +1,16 @@
-### 
 
-This repo utilises code in the following sources:
-- `aes.c` and `aes.h` use TINY AES128 C by kokke from https://github.com/kokke/tiny-AES128-C
-- `sha256.c` and `sha256.h` use B-Con's implementations https://github.com/B-Con/crypto-algorithms
-If there are any issues with these inclusions, they will be replaced with alternatives shortly after I have been notified.
-
-
+# Table of Contents
 1. [What is Lockout](#what-is-lockout)
-  * Okay... why?
-    * Case Study: Facebook
-2. How it works
-  * Encryption
-  * Decryption
-3. Next Steps
-  * Pipe Dreams
-4. Current Testing Process
-5. Q&A Corner
+  * [Okay... why?](#okay-why)
+    * [Case Study: Facebook](#case-study-facebook)
+2. [How it works](#how-it-works)
+  * [Encryption](#encryption)
+  * [Decryption](#decryption)
+3. [Next Steps](#next-steps)
+  * [Pipe Dreams](#pipe-dreams)
+4. [How to Run -- Current Testing Process](#how-to-run)
+5. [FAQ](#faq)
+6. [Other People's Code](#credit)
 
 
 ## What is Lockout
@@ -27,7 +22,7 @@ Lockout is a prototype which is designed to place a barrier between the user and
 The internet is addictive (wow, right?).
 Deleting a user account can be a pretty major step to take, sacrificing all of whatever investment you have put into it. While many websites offer a softer deactivation option for people unwilling to do that, this is often as easy to reactivate as regularly logging in, which serves to make it incredibly easy to get drawn back in again.
 
-#### Example: Facebook 
+#### Case Study: Facebook 
 To delete ones account, there is a 14 day grace period where it is effectively just deactivated. That's a pretty long timespan to either (a) change your mind and get back into it or (b) decide that deletion is too big of a step and opt to deactivate the profile instead.
 When deactivating a profile, the barrier to returning is practically nonexistant, just enter your login credentials and resume as before. Maybe there's some slight social shame if you make a big deal out of quitting.
 
@@ -92,9 +87,17 @@ To run
 - decryption difficulty currently specifies how many entries of the key are NOT to be randomised (i.e. 128 means all 128 bit are to remain as is). I recommend leaving this setting at a figure over 112 until you decide which outputs you wish to leave in.
 
 
-## "But... why did you do ___?"
-Ah yes! I'd love to hear some feedback. Right now I'll just run through what I can think someone may ask. I'll just add content here as I think of it for now.
+## FAQs
+For want of a better word... but yes(!), I'd love to hear some questions and feedback. Right now I'll just run through what I can think someone may ask. I'll just add content here as I think of it for now.
 
 ### Why the use of unsigned 8 bit integers (uint8_t) instead of unsigned characters?
 The primary reason is kokke's AES implementation uses them and I liked the consistency https://github.com/kokke/tiny-AES128-C
 A secondary reason is, as I opted to work around dealing directly with bit level changes and have no desire to make the system use more than an 8-bit character set, I found it pretty helpful as a reinforcement that I would dealing with a series of bytes rather than a string. This system uses my usage pretty liberally, treating them as unsigned char variables all over the shop without explicit casting. 
+
+# Credit
+
+This repo utilises other people's code in the following sources:
+- `aes.c` and `aes.h` use TINY AES128 C by kokke from https://github.com/kokke/tiny-AES128-C
+- `sha256.c` and `sha256.h` use B-Con's implementations https://github.com/B-Con/crypto-algorithms
+If there are any issues with these inclusions, they will be replaced with alternatives shortly after I have been notified. I've made a point of not meddling with this code much.
+
