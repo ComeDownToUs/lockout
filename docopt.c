@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "docopt.h"
+#include "lockout.h"
 
 
 const char help_message[] =
@@ -253,8 +254,12 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
  */
 
 DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
+    DocoptArgs blank = {
+        0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL,
+        usage_pattern, help_message
+    };
     DocoptArgs args = {
-        0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL,
+        0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL,
         usage_pattern, help_message
     };
     Tokens ts;
@@ -294,12 +299,23 @@ DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
         if(!strcmp(argv[3],"test")){
             printf("testprocess\n");
         } else{
-            args.strength = atoi(argv[3]);
+            if (argc > 4)
+                args.strength = atoi(argv[2]);
+            else{
+                printf("Insufficient arguments provided");
+                return blank;
+            }
         }
     } else if(args.d == 1 || args.decode == 1){
         args.decode=1;
-        args.ciphertextdir = argv[2];
-        args.strength = atoi(argv[3]);
+        if (argc > 3){
+            args.ciphertextdir = argv[2];
+            args.strength = atoi(argv[3]);
+        }
+        else{
+            printf("Insufficient arguments provided");
+            return blank;
+        }
     }
     return args;
 }

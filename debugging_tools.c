@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "debugging_tools.h"
 
-void print_array(uint8_t* arr, int size){
+void print_array(char* arr, int size){
   for(int i = 0; i<size; i++){
     printf("%3d,", arr[i]);
   }

@@ -25,12 +25,12 @@ typedef struct {
     char *ciphertextdir;
     char *input;
     char *inputstring;
-    char *strength;
     /* options without arguments */
     int commandline;
     int help;
     int version;
     int file;
+    int strength;
     /* options with arguments */
     char *password;
     char *read;

@@ -12,10 +12,11 @@
 #define TEXTSIZE 32 //512 is limit
 #endif
 
-void lockout(uint8_t* hash, uint8_t* plaintext, uint8_t* ciphertext, uint8_t strength);
-void breakin(uint8_t* hash, uint8_t* ciphertext, uint8_t* plaintext, uint8_t* output, uint8_t* append_val);
-int brute_force(uint8_t* plaintext, uint8_t* ciphertext, uint8_t* arr, uint8_t size, uint8_t current, uint8_t* output, uint8_t* append_val);
-void password_gen(uint8_t* hash, uint8_t* key, uint8_t length, uint8_t strength);
+int lockout(uint8_t* hash, uint8_t* plaintext, uint8_t* ciphertext, int strength);
+int breakin(uint8_t* hash, uint8_t* ciphertext, uint8_t* plaintext, uint8_t* output, uint8_t* append_val, int strength);
+int brute_force(uint8_t* plaintext, uint8_t* ciphertext, uint8_t* arr, char size, char current, uint8_t* output, uint8_t* append_val);
+void password_gen(uint8_t* hash, uint8_t* key, int length, char strength);
 void sha256_gen(uint8_t* input, uint8_t* output);
+void char_to_uint8t(char* input, uint8_t* output, int length);
 
 #endif
