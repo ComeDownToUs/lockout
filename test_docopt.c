@@ -43,7 +43,7 @@ int main(int argc, char** argv){
     // do the test stuff with prints and all
   } 
   else if (args.encode == 1){
-    // //basic argument validator process
+  // //basic argument validator process
     // //currently not working
     // if(!args.password)
     //   argvalidator+=1;
@@ -83,7 +83,7 @@ int main(int argc, char** argv){
     return 1;
   }
 
-
+//
   // //copying values to fixed unsigned char variables
   // strcpy(copypass, argv[1]);
   // strcpy(plaintext, argv[1]);
@@ -131,15 +131,15 @@ static int validator(DocoptArgs args, char process){
   char pass1[ARGS_MAXLEN];
   char pass2[ARGS_MAXLEN];
   char* hashed;
-    printf("\n\ncipher %s \n strength %d \n decode %d \n encode %d \n write %s \n salt %s \n \
-    password %s\n read %s \n inpstr %s\n cmd %d \n",
-    args.ciphertextdir, args.strength, args.decode, args.encode, args.write, args.salt, 
-    args.password, args.read, args.inputstring, args.commandline
-    );
 
+  uint8_t _password[ARGS_MAXLEN];
+  uint8_t _salt[ARGS_MAXLEN];
+  uint8_t _cipher[ARGS_MAXLEN];
+  uint8_t _plain[ARGS_MAXLEN];
+  uint8_t _hash[ARGS_MAXLEN];
 
   //if no strength, check for value,
-  if(args.strength<1 || args.strength > 127){
+  if(args.strength<125 || args.strength > 127){
     // verify strength
     printf("%d Please enter a value for strength: ", args.strength);
     scanf("%d", &(args.strength) );
@@ -155,7 +155,7 @@ static int validator(DocoptArgs args, char process){
 
       if(toupper(option) == 'Y'){
         printf("Please enter the salt? (y/n)");
-        scanf("%s", args.salt);
+        scanf("%s", _salt);
         fflush(stdin);
         //verify
       }
@@ -167,7 +167,7 @@ static int validator(DocoptArgs args, char process){
 
       if(toupper(option) == 'Y'){
         printf("Please enter the salt? (y/n)");
-        scanf("%s", args.salt);
+        scanf("%s", _salt);
         fflush(stdin);
         //verify
       }
@@ -184,7 +184,7 @@ static int validator(DocoptArgs args, char process){
       scanf(" %c", &option);
       if(toupper(option) == 'Y'){
         printf("Please enter what you want to be encrypted: ");
-        scanf("%s", plaintext);
+        scanf("%s", _plain);
       }
     }
     if ( process == 'd' || (process == 'e' && (toupper(option) == 'N')) ){
@@ -232,16 +232,22 @@ static int validator(DocoptArgs args, char process){
 
     strcpy(args.password, pass1);
   }
-  printf("5");
+  printf("5\n");
   //list all selections
+  //read in cipher
+
+  printf("6\n");
+  char_to_uint8t(args.password, _password, strlen(args.password));
+
+  printf("7\n");
   if(process == 'e'){
-    sha256_gen(args.password, hashed);
+    sha256_gen(_password, hashed);
+    printf("7.2\n");
     if (lockout(hashed, /*include salt in pt*/ plaintext, ciphertext, args.strength) == 0)
       return 0;
     else
       return 1;
   }
-  printf("6");
   //elif decode
   if(process == 'd'){
     sha256_gen(args.password, hashed);

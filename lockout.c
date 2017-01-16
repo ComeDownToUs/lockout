@@ -96,7 +96,8 @@ void password_gen(uint8_t* hash, uint8_t* password1, int length, char strength){
 // without having to change types across huge portions of code both ways
 void char_to_uint8t(char* input, uint8_t* output, int length){
   for(int i=0; i<length; i++){
-    output[i]=input[1];
-    printf("%c%d => %c%d\n", input[i], input[i], output[i], output[i]);
+    output[i]=input[i];
+    printf("%c%3d => %c%3d\n", input[i], input[i], output[i], output[i]);
   }
+  //strncpy(output, input, length);
 }
