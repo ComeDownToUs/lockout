@@ -1,4 +1,4 @@
-Will likely redo this from scratch at some point in the near future with a different central algorithm.
+Will likely redo this from scratch at some point in the near future, this is too rough of a prototype and should be cast aside now the core aspects have figured out instead of trying to refine it.
 
 
 # Table of Contents
