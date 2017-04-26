@@ -1,3 +1,5 @@
+Will likely redo this from scratch at some point in the near future with a different central algorithm.
+
 
 # Table of Contents
 1. [What is Lockout](#what-is-lockout)
